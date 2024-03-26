@@ -1,0 +1,99 @@
+/**
+*Part B
+*2. We covered the left-straight-line case for AVL balance.
+*Write the other three cases - right-straight-line, left-zigzag and right-zigzag.  Submit this as a .txt fil
+**/
+
+Case1 right-straight-line
+
+Basic idea:
+    For straight-line pattern, it usually takes a single-rotation to implement re-balance.
+Example:
+    For an AVL tree, insert 1, 2, 3 consecutively, the result before re-balance is as followed:
+    1
+     \
+      2
+       \
+        3
+    For node 1, the height of left child is 0 while the one of right child is 2. Based the property of AVL tree, it is showed to be an imbalance.
+    After a left rotation, it turns to be:
+        2
+       / \
+      1   3
+
+Code:
+    We need some presumptions before code: assume that Node 1 is a left child of its parent Node 4
+    node4.left = node1.right;
+    node1.right.left = node1;
+    node1.right = null;
+
+Case2 left-right-zigzag
+
+Basic idea:
+    For zigzag pattern, it usually takes a double-rotation to implement re-balance.
+Example:
+    For an AVL tree, insert 3, 1, 2 consecutively, the result before re-balance is as followed:
+        3
+       /
+      1
+       \
+        2
+    For node 3, the height of left child is 2 while the one of right child is 0. Based the property of AVL tree, it is showed to be an imbalance.
+    Step1: after a left rotation, it turns to be:
+        3
+       /
+      2
+     /
+    1
+    Step2: after a right rotation, it turns to be:
+        2
+       / \
+      1   3
+
+Code:
+    We need some presumptions before code: assume that Node 3 is a left child of its parent Node 4
+    // Implement the first step left rotation
+    node3.left.right.left = node3.left
+    node3.left = node3.left.right;
+    node3.left.left.right = null;
+    // Implement the second step right rotation
+    node4.left = node3.left;
+    node4.left.right = node3;
+    node3.left = null;
+
+Case3 right-left-zigzag
+
+Basic idea:
+    For zigzag pattern, it usually takes a double-rotation to implement re-balance.
+Example:
+    For an AVL tree, insert 1, 3, 2 consecutively, the result before re-balance is as followed:
+        1
+         \
+          3
+         /
+        2
+    For node 1, the height of left child is 0 while the one of right child is 2. Based the property of AVL tree, it is showed to be an imbalance.
+    Step1: after a left rotation, it turns to be:
+        1
+         \
+          2
+           \
+            3
+    Step2: after a left rotation, it turns to be:
+        2
+       / \
+      1   3
+
+Code:
+    We need some presumptions before code: assume that Node 1 is a left child of its parent Node 4
+    // Implement the first step left rotation
+    node1.right.left.right = node1.right
+    node1.right = node1.right.left;
+    node1.right.right.left = null;
+    // Implement the second step left rotation
+    node4.left = node1.right;
+    node4.left.left = node1;
+    node1.right = null;
+
+
+
